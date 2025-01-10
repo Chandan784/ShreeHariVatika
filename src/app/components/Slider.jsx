@@ -70,11 +70,6 @@ const Slider = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-10">
         <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">Luxury Stays</h1>
         <p className="text-lg mb-6">Book your stay with ease and comfort.</p>
-        <Link href="/login">
-          <button className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 shadow-lg transition duration-300 ease-in-out">
-            Get Started
-          </button>
-        </Link>
       </div>
     </div>
   );

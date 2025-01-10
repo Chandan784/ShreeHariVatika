@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 
 // Example images for the slider
 const images = [
@@ -162,11 +161,15 @@ const HotelRoomDetail = () => {
             <p className="text-3xl sm:text-4xl font-extrabold text-gray-700 mb-6">
               $299 per night
             </p>
-            <Link href="/booking">
+            <a
+              href={`https://wa.me/6370302039?text=I%20am%20interested%20in%20booking%20the%20Luxury%20Suite%20Room%20at%20$299%20per%20night.`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <button className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 shadow-lg transition duration-300 ease-in-out">
                 Book Now
               </button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

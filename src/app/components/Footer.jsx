@@ -3,7 +3,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 py-8">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+      <div className="container mx-auto flex justify-around flex-col  lg:flex-row gap-8 px-4">
         {/* Company Info */}
         <div>
           <h3 className="text-lg font-bold text-white mb-4">Company Name</h3>
@@ -22,26 +22,17 @@ const Footer = () => {
                 About Us
               </Link>
             </li>
-            <li>
-              <Link href="/services" className="hover:text-white">
-                Services
-              </Link>
-            </li>
+
             <li>
               <Link href="/contact" className="hover:text-white">
                 Contact
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-white">
-                Blog
               </Link>
             </li>
           </ul>
         </div>
 
         {/* Social Media */}
-        <div>
+        {/* <div>
           <h3 className="text-lg font-bold text-white mb-4">Follow Us</h3>
           <div className="flex space-x-4">
             <Link
@@ -69,10 +60,10 @@ const Footer = () => {
               LinkedIn
             </Link>
           </div>
-        </div>
+        </div> */}
 
         {/* Newsletter */}
-        <div>
+        {/* <div>
           <h3 className="text-lg font-bold text-white mb-4">Subscribe</h3>
           <p className="text-sm mb-4">
             Get the latest updates and offers directly in your inbox.
@@ -90,7 +81,7 @@ const Footer = () => {
               Subscribe
             </button>
           </form>
-        </div>
+        </div> */}
       </div>
 
       {/* Footer Bottom */}
