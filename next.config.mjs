@@ -7,6 +7,9 @@ const nextConfig = {
       "media.gettyimages.com",
       "source.unsplash.com",
       "media.istockphoto.com",
+      "img.freepik.com",
+      "www.bing.com",
+      "via.placeholder.com",
     ], // Add the domain that hosts your image
   },
 };
