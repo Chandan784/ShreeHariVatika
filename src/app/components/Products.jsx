@@ -78,7 +78,7 @@ export default function Hotels() {
                 ₹{hotel.price}
               </p>
               <button
-                onClick={() => router.push(`/hotel/${hotel.id}`)}
+                onClick={() => router.push(`/pages/details`)}
                 className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 self-center"
               >
                 Book Now
