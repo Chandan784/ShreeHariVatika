@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { auth } from "@/app/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth"; // Fixed import for `signInWithEmailAndPassword`
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import the Next.js Link component
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -47,9 +48,17 @@ export default function Login() {
         >
           Login
         </button>
-        <a href="/">
-          <p>dont have an account , signup</p>
-        </a>
+        <div className="text-center mt-4">
+          <p className="text-gray-700">
+            Don’t have an account?{" "}
+            <Link
+              href="/signup"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Sign up
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );
