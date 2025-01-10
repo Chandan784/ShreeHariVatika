@@ -37,7 +37,7 @@ const hotels = [
   },
   {
     id: 5,
-    title: "Beachfront Hotels",
+    title: "Beachfront cottage",
     description:
       "Enjoy the view of the ocean and the sand right outside your room.",
     image:
