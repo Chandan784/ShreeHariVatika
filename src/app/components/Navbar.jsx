@@ -19,6 +19,24 @@ export default function Navbar() {
           </div>
           <div className="hidden md:flex space-x-4">
             <Link
+              href="/"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/" ? "bg-blue-700" : ""}`}
+            >
+              Home
+            </Link>
+            <Link
+              href="pages/about"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
+            >
+              About
+            </Link>
+            <Link
+              href="pages/contact"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+            >
+              Contact
+            </Link>
+            <Link
               href="pages/login"
               className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
             >
@@ -67,9 +85,24 @@ export default function Navbar() {
             >
               Home
             </Link>
+
             <Link
-              href="/login"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
+              href="/about"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
+            >
+              About
+            </Link>
+
+            <Link
+              href="pages/contact"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+            >
+              Contact
+            </Link>
+
+            <Link
+              href="pages/login"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>

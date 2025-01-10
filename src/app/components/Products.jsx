@@ -1,6 +1,7 @@
 // pages/index.js
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const hotels = [
   {
@@ -9,7 +10,7 @@ const hotels = [
     description:
       "Experience the best of luxury and comfort in our selected hotels.",
     image:
-      "http://ts2.mm.bing.net/th?id=OIP.inwd6yd_jcFEgCkcGSJbOwAAAA&pid=15.1",
+      "https://media.gettyimages.com/id/1254241890/photo/old-naga-sadhu-exhibiting-his-long-dreadlocks.jpg?s=612x612&w=0&k=20&c=a97deER9kA_3RKlOI5bLUPKC_aWbAuTLa8yFYKGBg8o=",
   },
   {
     id: 2,
@@ -45,9 +46,12 @@ const hotels = [
 ];
 
 export default function Products() {
+  let router = useRouter();
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold text-center mb-10">Hotel Categories</h1>
+      <h1 className="text-4xl font-bold text-center mb-10">
+        Cottage Categories
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {hotels.map((hotel) => (
           <div
@@ -65,9 +69,24 @@ export default function Products() {
               {hotel.title}
             </h2>
             <p className="text-gray-600 mb-4">{hotel.description}</p>
-            <button className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors">
-              Explore
-            </button>
+
+            {/* Price and Book Now Section */}
+            <div className="flex items-center justify-between">
+              {/* Price */}
+              <p className="text-lg font-semibold text-gray-800">
+                $199 <span className="text-gray-600 text-sm">/ night</span>
+              </p>
+
+              {/* Book Now Button */}
+              <button
+                onClick={() => {
+                  router.push("/pages/details");
+                }}
+                className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors"
+              >
+                Book Now
+              </button>
+            </div>
           </div>
         ))}
       </div>
