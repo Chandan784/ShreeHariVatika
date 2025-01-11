@@ -256,7 +256,7 @@ const HotelRoomDetail = ({ params }) => {
               ₹{hotelData?.price} per night
             </p>
             <a
-              href={`https://wa.me/6370302039?text=I%20am%20interested%20in%20booking%20the%20${hotelData?.title}%20at%20₹${hotelData?.price}%20per%20night.`}
+              href={`https://wa.me/9438368531?text=I%20am%20interested%20in%20booking%20the%20${hotelData?.title}%20at%20₹${hotelData?.price}%20per%20night.`}
               target="_blank"
               rel="noopener noreferrer"
             >
