@@ -19,12 +19,14 @@ const HotelRoomDetail = ({ params }) => {
   const hotels = [
     {
       id: 1,
-      title: "Dormitory Tent",
+      title: "Deluxe Dormitory Tent",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
       image:
-        "https://th.bing.com/th/id/OIP.tFCya-4WhJgvr8TYlfj3WgHaFj?w=230&h=180&c=7&r=0&o=5&pid=1.7",
+        "https://th.bing.com/th/id/OIP.PZxioylnhWEh35X0w-4ggwHaE7?w=241&h=180&c=7&r=0&o=5&pid=1.7",
       price: "2000",
+      beds: "no Beds",
+      persons: "16 Persons",
       facilities: [
         "TV",
         "Blanket",
@@ -53,8 +55,10 @@ const HotelRoomDetail = ({ params }) => {
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
       image:
-        "https://th.bing.com/th/id/OIP.tFCya-4WhJgvr8TYlfj3WgHaFj?w=230&h=180&c=7&r=0&o=5&pid=1.7",
+        "https://th.bing.com/th/id/OIP.QCyXQX1zYYuIskUjyNW7OwHaFj?w=199&h=180&c=7&r=0&o=5&pid=1.7",
       price: "3000",
+      beds: "Folding Beds",
+      persons: "8 Persons",
       facilities: [
         "TV",
         "Blanket",
@@ -83,7 +87,9 @@ const HotelRoomDetail = ({ params }) => {
       description: "Enjoy the finest amenities and exceptional service.",
       image:
         "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
-      price: "As per requirement",
+      price: " As per requirement",
+      beds: "Custom",
+      persons: "",
       facilities: [
         "TV",
         "Blanket",
@@ -108,11 +114,13 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 4,
-      title: "Luxury Vip Cottage (2 person)",
+      title: "Luxury Vip Cottage",
       description: "Affordable comfort for your travel needs.",
       image:
         "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
       price: "21000",
+      beds: "1 King Bed",
+      persons: "upto 8 Persons",
       facilities: [
         "TV",
         "Blanket",
@@ -137,11 +145,13 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 5,
-      title: "Vip Cottage (2 family)",
+      title: "Vip Cottage",
       description: "Affordable comfort for your travel needs.",
       image:
-        "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
+        "https://th.bing.com/th/id/OIP.4gqnBJfd-azejQB6EX2O1gHaE8?w=292&h=195&c=7&r=0&o=5&pid=1.7",
       price: "11000",
+      beds: "1 king Bed",
+      persons: "upto 4 Persons",
       facilities: [
         "TV",
         "Blanket",
