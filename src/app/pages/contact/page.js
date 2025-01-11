@@ -63,7 +63,7 @@ const ContactPage = () => {
                 </svg>
               </div>
               <p className="text-gray-800 font-medium">
-                contact@hotelbooking.com
+                enervistasolutions2gmail.com
               </p>
             </div>
 
@@ -86,8 +86,8 @@ const ContactPage = () => {
                 </svg>
               </div>
               <p className="text-gray-800 font-medium">
-                Reception - 8917459855, , 8456988336 Manager - 9438368531,{" "}
-                <br /> Ass. Manager- 7328079069 <br />
+                Reception - 8917459855 ,8456988336 Manager - 9438368531, <br />{" "}
+                Ass. Manager- 7328079069 <br />
                 Service - +91 7077314440, +91 70080 92138, +91 95833 2034
               </p>
             </div>

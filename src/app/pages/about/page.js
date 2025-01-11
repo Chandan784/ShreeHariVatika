@@ -18,10 +18,10 @@ const AboutPage = () => {
         {/* Left: Text Content */}
         <div className="space-y-6">
           <h2 className="text-3xl font-bold text-gray-800">
-            Welcome to Hotel Booking
+            Welcome to ShreeHariVatika
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            At Hotel Booking, we believe that everyone deserves a seamless and
+            At ShreeHarivatika, we believe that everyone deserves a seamless and
             stress-free experience when planning their travels. Our platform is
             designed to provide you with access to a wide variety of
             accommodations, from luxurious resorts to cozy boutique stays.
@@ -42,7 +42,7 @@ const AboutPage = () => {
         {/* Right: Image */}
         <div className="relative w-full h-96 lg:h-full">
           <Image
-            src="https://media.istockphoto.com/id/180716482/photo/about-us.webp?a=1&b=1&s=612x612&w=0&k=20&c=GcBdI_K_rB2VN-dEOjgaYQ3ILWxCcHlabWsi8gPm-KM="
+            src="https://th.bing.com/th/id/OIP.88iOn159uzv1fGl8u4F9DgHaEA?w=328&h=180&c=7&r=0&o=5&pid=1.7"
             alt="About Us Image"
             layout="fill"
             objectFit="cover"

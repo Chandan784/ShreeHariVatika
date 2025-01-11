@@ -6,10 +6,10 @@ const Footer = () => {
       <div className="container mx-auto flex justify-around flex-col  lg:flex-row gap-8 px-4">
         {/* Company Info */}
         <div>
-          <h3 className="text-lg font-bold text-white mb-4">Company Name</h3>
+          <h3 className="text-lg font-bold text-white mb-4">ShreeHarivatika</h3>
           <p className="text-sm">
-            Your company tagline or brief description goes here. Keep it short
-            and professional.
+            "Crafting Comfort, One Cottage at a Time – Where Elegance Meets
+            Nature!"
           </p>
         </div>
 

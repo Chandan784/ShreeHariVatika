@@ -10,11 +10,11 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <nav className="bg-gray-900 shadow-lg">
+    <nav className=" bg-white shadow-lg text-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-white font-bold text-xl">
+            <Link href="/" className=" text-white font-bold text-xl">
               <Image
                 src="/photos/logo.jpg"
                 className="object-cover"
@@ -27,25 +27,25 @@ export default function Navbar() {
           <div className="hidden md:flex space-x-4">
             <Link
               href="/"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/" ? "bg-blue-700" : ""}`}
+              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/" ? "bg-blue-700" : ""}`}
             >
               Home
             </Link>
             <Link
               href="pages/about"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
+              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
             <Link
               href="pages/contact"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
             <Link
               href="pages/login"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
+              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>
