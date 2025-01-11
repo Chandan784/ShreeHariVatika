@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion"; // Import motion from framer-motion
 
 const hotels = [
   {
@@ -165,16 +166,36 @@ const hotels = [
 export default function Hotels() {
   const router = useRouter();
 
+  // Animation variants for the cards
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (index) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: index * 0.2, duration: 0.5 },
+    }),
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-center mb-6">
+      <motion.h2
+        className="text-2xl font-bold text-center mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         Available Cottages
-      </h2>
+      </motion.h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {hotels.map((hotel) => (
-          <div
+        {hotels.map((hotel, index) => (
+          <motion.div
             key={hotel.id}
             className="border border-gray-300 rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={cardVariants}
+            custom={index} // Pass index for staggered animations
           >
             <div>
               <div className="w-full h-48 relative">
@@ -214,7 +235,7 @@ export default function Hotels() {
                 Book Now
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
