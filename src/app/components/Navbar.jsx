@@ -32,20 +32,20 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              href="/about"
+              href="pages/about"
               className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
             <Link
-              href="/contact"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/contact" ? "bg-blue-700" : ""}`}
+              href="pages/contact"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
             <Link
-              href="/login"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
+              href="pages/login"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>
@@ -94,22 +94,22 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/about"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
+              href="pages/about"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
 
             <Link
-              href="/contact"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/contact" ? "bg-blue-700" : ""}`}
+              href="pages/contact"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
 
             <Link
-              href="/login"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
+              href="pages/login"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>
