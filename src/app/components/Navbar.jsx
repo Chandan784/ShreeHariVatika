@@ -87,7 +87,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/about"
+              href="pages/about"
               className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
             >
               About
