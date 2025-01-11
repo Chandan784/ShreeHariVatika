@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,13 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="text-white font-bold text-xl">
-              ShreeHariVatika
+              <Image
+                src="/photos/logo.jpg"
+                className="object-cover"
+                height={100}
+                width={160}
+                alt="Logo"
+              />
             </Link>
           </div>
           <div className="hidden md:flex space-x-4">
@@ -25,19 +32,19 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              href="pages/about"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
+              href="/about"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
             <Link
-              href="pages/contact"
-              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+              href="/contact"
+              className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
             <Link
-              href="pages/login"
+              href="/login"
               className={`text-white px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
             >
               Login
@@ -87,22 +94,22 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="pages/about"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
+              href="/about"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
 
             <Link
-              href="pages/contact"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+              href="/contact"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
 
             <Link
-              href="pages/login"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
+              href="/login"
+              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>

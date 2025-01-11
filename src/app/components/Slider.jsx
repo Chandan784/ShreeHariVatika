@@ -8,12 +8,11 @@ const Slider = () => {
 
   // Array of image URLs for the slider
   const images = [
-    "https://media.gettyimages.com/id/114907650/photo/procession-of-naga-sadhus-at-kumbh-fair.jpg?s=612x612&w=0&k=20&c=PSoL1mz6ysKj0rVAEerYaGzCSLu2RT2psbr9Ajq_2Sw=",
     "https://media.gettyimages.com/id/2188722520/photo/prayagraj-india-the-state-govt-is-setting-up-a-luxury-tent-city-with-more-than-2-000-swiss.jpg?s=612x612&w=0&k=20&c=RSCC9m17do0Fqc5hLQ2rdp-fDcQfa4tcATLzKNPAxS4=",
     "https://media.gettyimages.com/id/2188722879/photo/prayagraj-india-vip-bamboo-cottage-set-up-near-arail-tent-city-for-the-upcoming-maha-kumbh.jpg?s=612x612&w=0&k=20&c=gXPp25sqz6XOO_daTCNMr3IxwHEFe9mErZtvMPImIpE=",
     "https://media.gettyimages.com/id/1246407286/photo/prayagraj-india-hindu-devotees-gather-to-take-a-holy-dip-at-the-sangam-the-confluence-of-the.jpg?s=612x612&w=0&k=20&c=CBlJAIEN7QjCSRDrjVLj4IeGB4A5c0uET7m-OKg-5IY=",
     " https://media.gettyimages.com/id/1246407247/photo/prayagraj-india-hindu-devotees-gather-cross-pontoon-bridge-over-the-ganga-river-take-a-holy.jpg?s=612x612&w=0&k=20&c=roJ4mEy_x8bNl2oMnV3eK207jJ1L2rCLUdnYdgFn19c=",
-    "https://media.gettyimages.com/id/2191811042/photo/a-sadhu-or-hindu-holy-man-gestures-during-a-religious-procession-of-the-niranjani-akhara.jpg?s=612x612&w=0&k=20&c=LRy6grV18ZMYy8WC42CL8VFSzvMM4h5RrABook5X-t8=",
+    ,
   ];
 
   // Auto-slide functionality using useEffect and setInterval
