@@ -12,7 +12,6 @@ const Slider = () => {
     "https://media.gettyimages.com/id/2188722879/photo/prayagraj-india-vip-bamboo-cottage-set-up-near-arail-tent-city-for-the-upcoming-maha-kumbh.jpg?s=612x612&w=0&k=20&c=gXPp25sqz6XOO_daTCNMr3IxwHEFe9mErZtvMPImIpE=",
     "https://media.gettyimages.com/id/1246407286/photo/prayagraj-india-hindu-devotees-gather-to-take-a-holy-dip-at-the-sangam-the-confluence-of-the.jpg?s=612x612&w=0&k=20&c=CBlJAIEN7QjCSRDrjVLj4IeGB4A5c0uET7m-OKg-5IY=",
     " https://media.gettyimages.com/id/1246407247/photo/prayagraj-india-hindu-devotees-gather-cross-pontoon-bridge-over-the-ganga-river-take-a-holy.jpg?s=612x612&w=0&k=20&c=roJ4mEy_x8bNl2oMnV3eK207jJ1L2rCLUdnYdgFn19c=",
-    ,
   ];
 
   // Auto-slide functionality using useEffect and setInterval
