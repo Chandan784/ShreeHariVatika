@@ -53,7 +53,7 @@ export default function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white inline-flex items-center justify-center p-2 rounded-md hover:bg-blue-700 focus:outline-none"
+              className="text-black inline-flex items-center justify-center p-2 rounded-md hover:bg-blue-700 focus:outline-none"
             >
               <svg
                 className="h-6 w-6"
