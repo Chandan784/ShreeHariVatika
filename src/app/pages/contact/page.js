@@ -85,7 +85,11 @@ const ContactPage = () => {
                   />
                 </svg>
               </div>
-              <p className="text-gray-800 font-medium">+1 (123) 456-7890</p>
+              <p className="text-gray-800 font-medium">
+                Reception - 8917459855, , 8456988336 Manager - 9438368531,{" "}
+                <br /> Ass. Manager- 7328079069 <br />
+                Service - +91 7077314440, +91 70080 92138, +91 95833 2034
+              </p>
             </div>
 
             {/* Address */}
@@ -107,7 +111,8 @@ const ContactPage = () => {
                 </svg>
               </div>
               <p className="text-gray-800 font-medium">
-                123 Main Street, City, Country
+                Sector -23, in front of pipa pool, side of BSNL tower, KUMBH
+                MELA, Prayagraj ,Uttar Pradesh, India
               </p>
             </div>
           </div>
