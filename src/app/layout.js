@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/photos/logo3.png"></link>
         <title>ShreeHariVatika</title>
       </head>
       <body
