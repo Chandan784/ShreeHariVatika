@@ -230,9 +230,9 @@ export default function Hotels() {
             <div className="p-4">
               <button
                 onClick={() => router.push(`/pages/details/${hotel.id}`)}
-                className="w-full px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="w-full px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
               >
-                Book Now
+                Contact on Whatsapp
               </button>
             </div>
           </motion.div>

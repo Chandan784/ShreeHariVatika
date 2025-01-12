@@ -270,8 +270,8 @@ const HotelRoomDetail = ({ params }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 shadow-lg transition duration-300 ease-in-out">
-                Book Now
+              <button className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition duration-300 ease-in-out">
+                Chat On Whatsaap
               </button>
             </a>
           </div>
