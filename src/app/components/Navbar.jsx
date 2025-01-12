@@ -16,7 +16,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className=" text-white font-bold text-xl">
               <Image
-                src="/photos/logo3.jpg"
+                src="/photos/logo3.png"
                 className="object-cover"
                 height={100}
                 width={160}
