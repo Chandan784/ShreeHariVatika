@@ -66,7 +66,10 @@ const Slider = () => {
 
       {/* Optional: Call-to-Action */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-10">
-        <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">Luxury Stays</h1>
+        <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">
+          {" "}
+          Enjoy with us in this Purna Maha Kumbh
+        </h1>
         <p className="text-lg mb-6">Book your stay with ease and comfort.</p>
       </div>
     </div>

@@ -262,7 +262,7 @@ const HotelRoomDetail = ({ params }) => {
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">
               Price
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-gray-700 mb-6">
+            <p className="text-2xl sm:text-3xl font-extrabold text-gray-700 mb-6">
               ₹{hotelData?.price} per night
             </p>
             <a
