@@ -63,7 +63,7 @@ const ContactPage = () => {
                 </svg>
               </div>
               <p className="text-gray-800 font-medium">
-                enervistasolutions2gmail.com
+                enervistasolutions@gmail.com
               </p>
             </div>
 
