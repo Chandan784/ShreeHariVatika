@@ -88,28 +88,28 @@ export default function Navbar() {
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <Link
               href="/"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/" ? "bg-blue-700" : ""}`}
+              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "/" ? "bg-blue-700" : ""}`}
             >
               Home
             </Link>
 
             <Link
               href="pages/about"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
+              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/about" ? "bg-blue-700" : ""}`}
             >
               About
             </Link>
 
             <Link
               href="pages/contact"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
+              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/contact" ? "bg-blue-700" : ""}`}
             >
               Contact
             </Link>
 
             <Link
               href="pages/login"
-              className={`block text-white px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
+              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
             >
               Login
             </Link>
