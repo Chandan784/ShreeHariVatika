@@ -18,12 +18,12 @@ const Footer = () => {
           <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <Link href="page/about" legacyBehavior>
+              <Link href="pages/about" legacyBehavior>
                 <a className="hover:text-white">About Us</a>
               </Link>
             </li>
             <li>
-              <Link href="page/contact" legacyBehavior>
+              <Link href="pages/contact" legacyBehavior>
                 <a className="hover:text-white">Contact</a>
               </Link>
             </li>
