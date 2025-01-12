@@ -10,7 +10,7 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <nav className=" bg-white shadow-lg text-black mb-2">
+    <nav className=" bg-white shadow-lg text-black  py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -18,7 +18,7 @@ export default function Navbar() {
               <Image
                 src="/photos/logo3.png"
                 className="object-cover"
-                height={100}
+                height={90}
                 width={160}
                 alt="Logo"
               />
