@@ -191,7 +191,6 @@ const HotelRoomDetail = ({ params }) => {
 
   return (
     <>
-      <Navbar />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Image Slider */}
         <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-10 shadow-lg">

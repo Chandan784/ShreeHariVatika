@@ -23,7 +23,6 @@ const ContactPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 py-12 px-6">
         {/* Header Section */}
         <div className="text-center mb-12">
