@@ -6,7 +6,6 @@ import Image from "next/image";
 const AboutPage = () => {
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-6">
         {/* Header Section */}
         <div className="text-center mb-12">

@@ -4,7 +4,6 @@ import React from "react";
 const Policies = () => {
   return (
     <div>
-      <Navbar />
       <div className="max-w-4xl mx-auto p-6 bg-gray-50 text-gray-800 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
           Policies for Shree Hari Vatika
