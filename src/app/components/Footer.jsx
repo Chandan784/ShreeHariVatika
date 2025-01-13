@@ -27,6 +27,11 @@ const Footer = () => {
                 <a className="hover:text-white">Contact</a>
               </Link>
             </li>
+            <li>
+              <Link href="pages/policy" legacyBehavior>
+                <a className="hover:text-white">Policy</a>
+              </Link>
+            </li>
           </ul>
         </div>
 
