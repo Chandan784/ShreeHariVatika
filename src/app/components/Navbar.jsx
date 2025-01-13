@@ -44,10 +44,10 @@ export default function Navbar() {
               Contact
             </Link>
             <Link
-              href="pages/login"
-              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
+              href="pages/policy"
+              className={`text-black px-3 py-2 rounded-md text-sm font-medium ${router.pathname === "pages/policy" ? "bg-blue-700" : ""}`}
             >
-              Login
+              Policy
             </Link>
           </div>
           <div className="flex md:hidden">
@@ -108,10 +108,10 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="pages/login"
-              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/login" ? "bg-blue-700" : ""}`}
+              href="pages/policy"
+              className={`block text-black px-3 py-2 rounded-md text-base font-medium ${router.pathname === "pages/policy" ? "bg-blue-700" : ""}`}
             >
-              Login
+              Policy
             </Link>
           </div>
         </div>
