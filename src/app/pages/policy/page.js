@@ -61,16 +61,16 @@ const Policies = () => {
           </p>
           <ul className="list-disc list-inside mt-4 text-gray-700">
             <li>
-              Refunds are applicable only if the cancellation is made within 7
-              days of purchase.
+              Refunds are applicable only if the cancellation is made within 24
+              hours of booking days of purchase.
             </li>
             <li>
               Processing fees may apply, and refunds will be credited to the
               original payment method.
             </li>
             <li>
-              For queries, contact our support team at
-              support@shreeharivatika.com.
+              For queries, contact our support team at Manager - 9438368531,
+              Ass. Manager- 7328079069.
             </li>
           </ul>
         </section>
