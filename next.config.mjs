@@ -10,6 +10,7 @@ const nextConfig = {
       "img.freepik.com",
       "www.bing.com",
       "via.placeholder.com",
+      "images.app.goo.gl",
     ], // Add the domain that hosts your image
   },
 };

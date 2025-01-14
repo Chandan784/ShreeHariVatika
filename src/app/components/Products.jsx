@@ -9,11 +9,10 @@ const hotels = [
     title: "Deluxe Dormitory Tent",
     description:
       "Experience the best of luxury and comfort in our selected hotels.",
-    image:
-      "https://th.bing.com/th/id/OIP.PZxioylnhWEh35X0w-4ggwHaE7?w=241&h=180&c=7&r=0&o=5&pid=1.7",
+    image: "/photos/deluxtent.jpg",
     price: "2000",
-    beds: "no Beds",
-    persons: "16 Persons",
+    beds: "Mattress",
+    persons: "16 persons",
     facilities: [
       "TV",
       "Blanket",
@@ -41,11 +40,10 @@ const hotels = [
     title: "Premium Dormitory Tent",
     description:
       "Experience the best of luxury and comfort in our selected hotels.",
-    image:
-      "https://th.bing.com/th/id/OIP.QCyXQX1zYYuIskUjyNW7OwHaFj?w=199&h=180&c=7&r=0&o=5&pid=1.7",
+    image: "/photos/dormitory.jpg",
     price: "3000",
     beds: "Folding Beds",
-    persons: "8 Persons",
+    persons: "8 persons",
     facilities: [
       "TV",
       "Blanket",
@@ -103,11 +101,10 @@ const hotels = [
     id: 4,
     title: "Luxury Vip Cottage",
     description: "Affordable comfort for your travel needs.",
-    image:
-      "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
+    image: "/photos/luxuryvip.jpg",
     price: "21000",
-    beds: "1 King Bed",
-    persons: "upto 8 Persons",
+    beds: "1 double bed",
+    persons: "upto 6 persons",
     facilities: [
       "TV",
       "Blanket",
@@ -134,11 +131,10 @@ const hotels = [
     id: 5,
     title: "Vip Cottage",
     description: "Affordable comfort for your travel needs.",
-    image:
-      "https://th.bing.com/th/id/OIP.4gqnBJfd-azejQB6EX2O1gHaE8?w=292&h=195&c=7&r=0&o=5&pid=1.7",
+    image: "/photos/vipcottage.jpg",
     price: "11000",
     beds: "1 king Bed",
-    persons: "upto 4 Persons",
+    persons: "upto 4 persons",
     facilities: [
       "TV",
       "Blanket",
