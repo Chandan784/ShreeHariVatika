@@ -14,7 +14,7 @@ const HotelRoomDetail = ({ params }) => {
         "Experience the best of luxury and comfort in our selected hotels.",
       image: "/photos/deluxtent.jpg",
       price: "2000",
-      beds: "Matters",
+      beds: "No bed only floor mattress",
       persons: "16 Persons",
       facilities: [
         "TV",
@@ -97,7 +97,7 @@ const HotelRoomDetail = ({ params }) => {
       description: "Affordable comfort for your travel needs.",
       image: "/photos/luxuryvip.jpg",
       price: "21000",
-      beds: "1 King Bed",
+      beds: "2 double beds",
       persons: "Up to 8 Persons",
       facilities: [
         "TV",
@@ -208,6 +208,7 @@ const HotelRoomDetail = ({ params }) => {
                   <span className="text-blue-600 font-bold">
                     ₹{hotelData?.price}
                   </span>
+                  <span> / bed or mattress</span>
                 </h2>
                 <p className="text-gray-600 text-lg">
                   Beds: {hotelData?.beds || "Not Specified"}
@@ -218,7 +219,7 @@ const HotelRoomDetail = ({ params }) => {
               </div>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <button className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition">
-                  Chat on WhatsApp
+                  Book On WhatsApp
                 </button>
               </a>
             </div>

@@ -103,7 +103,7 @@ const hotels = [
     description: "Affordable comfort for your travel needs.",
     image: "/photos/luxuryvip.jpg",
     price: "21000",
-    beds: "1 double bed",
+    beds: "2 double beds",
     persons: "upto 4 persons",
     facilities: [
       "TV",
