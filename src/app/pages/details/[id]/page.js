@@ -1,14 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/app/components/Navbar";
-
-const images = [
-  "/photos/dormitory.jpg",
-  "/photos/luxuryvip.jpg",
-  "/photos/vipcottage.jpg",
-];
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
@@ -20,10 +12,9 @@ const HotelRoomDetail = ({ params }) => {
       title: "Deluxe Dormitory Tent",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
-      image:
-        "https://th.bing.com/th/id/OIP.PZxioylnhWEh35X0w-4ggwHaE7?w=241&h=180&c=7&r=0&o=5&pid=1.7",
+      image: "/photos/deluxtent.jpg",
       price: "2000",
-      beds: "No Beds",
+      beds: "Matters",
       persons: "16 Persons",
       facilities: [
         "TV",
@@ -49,8 +40,7 @@ const HotelRoomDetail = ({ params }) => {
       title: "Premium Dormitory Tent",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
-      image:
-        "https://th.bing.com/th/id/OIP.QCyXQX1zYYuIskUjyNW7OwHaFj?w=199&h=180&c=7&r=0&o=5&pid=1.7",
+      image: "/photos/dormitory.jpg",
       price: "3000",
       beds: "Folding Beds",
       persons: "8 Persons",
@@ -105,8 +95,7 @@ const HotelRoomDetail = ({ params }) => {
       id: 4,
       title: "Luxury Vip Cottage",
       description: "Affordable comfort for your travel needs.",
-      image:
-        "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
+      image: "/photos/luxuryvip.jpg",
       price: "21000",
       beds: "1 King Bed",
       persons: "Up to 8 Persons",
@@ -133,8 +122,7 @@ const HotelRoomDetail = ({ params }) => {
       id: 5,
       title: "Vip Cottage",
       description: "Affordable comfort for your travel needs.",
-      image:
-        "https://th.bing.com/th/id/OIP.4gqnBJfd-azejQB6EX2O1gHaE8?w=292&h=195&c=7&r=0&o=5&pid=1.7",
+      image: "/photos/vipcottage.jpg",
       price: "11000",
       beds: "1 King Bed",
       persons: "Up to 4 Persons",
@@ -158,50 +146,22 @@ const HotelRoomDetail = ({ params }) => {
       ],
     },
   ];
-
   const hotelData = hotels.find((hotel) => hotel.id == id);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
 
   const whatsappLink = `https://wa.me/9438368531?text=I%20am%20interested%20in%20booking%20the%20${hotelData?.title}%20at%20₹${hotelData?.price}%20per%20night.`;
 
   return (
     <>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Image Slider */}
-        <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-10 shadow-lg">
-          <div
-            className="absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out"
-            style={{
-              backgroundImage: `url(${images[currentIndex]})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            aria-label={`Slide ${currentIndex + 1}`}
-          ></div>
-
-          <button
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-3xl p-4 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition"
-            onClick={prevSlide}
-          >
-            &#8249;
-          </button>
-          <button
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-3xl p-4 bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition"
-            onClick={nextSlide}
-          >
-            &#8250;
-          </button>
+        {/* Image Section */}
+        <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-10 shadow-lg">
+          {hotelData?.image && (
+            <img
+              src={hotelData.image}
+              alt={hotelData.title}
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
 
         {/* Details Section */}

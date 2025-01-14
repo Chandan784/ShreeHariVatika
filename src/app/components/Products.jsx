@@ -72,7 +72,7 @@ const hotels = [
     description: "Enjoy the finest amenities and exceptional service.",
     image:
       "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
-    price: " As per requirement",
+    price: "20000",
     beds: "Custom",
     persons: "",
     facilities: [
@@ -104,7 +104,7 @@ const hotels = [
     image: "/photos/luxuryvip.jpg",
     price: "21000",
     beds: "1 double bed",
-    persons: "upto 6 persons",
+    persons: "upto 4 persons",
     facilities: [
       "TV",
       "Blanket",
@@ -129,7 +129,7 @@ const hotels = [
   },
   {
     id: 5,
-    title: "Vip Cottage",
+    title: "Vip Cottage (shared)",
     description: "Affordable comfort for your travel needs.",
     image: "/photos/vipcottage.jpg",
     price: "11000",

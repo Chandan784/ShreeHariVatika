@@ -56,17 +56,22 @@ const Policies = () => {
             Refund Policy
           </h2>
           <p className="text-gray-700 text-base leading-relaxed">
-            Our refund policy is designed to ensure customer satisfaction while
-            maintaining transparency:
+            Once a purchase is made, it cannot be canceled, refunded, or
+            exchanged under any circumstances.
           </p>
           <ul className="list-disc list-inside mt-4 text-gray-700">
             <li>
-              Refunds are applicable only if the cancellation is made within 24
-              hours of booking days of purchase.
+              You are eligible for a 50% refund if the request is made within 24
+              hours of the purchase date.
             </li>
             <li>
-              Processing fees may apply, and refunds will be credited to the
-              original payment method.
+              To request a refund, please contact us at
+              [enervistasolutions@gmail.com]. Include the following details:
+              1.Order number 2.Reason for the refund request
+            </li>
+            <li>
+              Once the refund approves it will be processed and credited within
+              7 working days.
             </li>
             <li>
               For queries, contact our support team at Manager - 9438368531,
