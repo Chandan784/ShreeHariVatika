@@ -10,24 +10,37 @@ const Policies = () => {
         </h1>
 
         <section className="mb-6 p-4 bg-white rounded-lg shadow">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Terms and Conditions
-          </h2>
-          <p className="text-gray-700 text-base leading-relaxed">
-            Welcome to Shree Hari Vatika! By accessing or using our website, you
-            agree to comply with the following terms and conditions:
-          </p>
-          <ul className="list-disc list-inside mt-4 text-gray-700">
-            <li>You must use our services for lawful purposes only.</li>
-            <li>
-              Any content provided by you should not violate the rights of
-              others.
-            </li>
-            <li>
-              We reserve the right to modify or discontinue any part of the
-              website without prior notice.
-            </li>
-          </ul>
+          Terms and Conditions Welcome to SHREE HARI VATIKA. By using our
+          website or purchasing our products/services, you agree to comply with
+          the following terms: Introduction These Terms govern the use of SHREE
+          HARI VATIKA's website, products, and services. By accessing our
+          platform, you accept these Terms, including any future updates.
+          Account Registration Users must provide accurate information when
+          creating accounts and are responsible for maintaining the
+          confidentiality of their login details. Use of Services You agree to
+          use our products and services only for lawful purposes and not to
+          disrupt or harm our operations or other users. Orders and Payments All
+          purchases must be paid in full, including taxes and fees. We reserve
+          the right to cancel orders due to availability issues or suspected
+          fraud. Pricing and Availability Prices are subject to change without
+          notice. In case of pricing errors, you will be notified to confirm or
+          cancel the order. Returns and Refunds Please refer to our Return
+          Policy for details on how to request returns or refunds. Privacy
+          Policy By using our services, you agree to the collection and use of
+          your data as outlined in our Privacy Policy. Intellectual Property All
+          content on our website is owned by SHREE HARI VATIKA and protected by
+          law. Unauthorized use or distribution is prohibited. Limitation of
+          Liability We are not liable for indirect or consequential damages
+          arising from your use of our products or services. Total liability is
+          limited to the amount paid for the relevant product or service.
+          Indemnification You agree to indemnify SHREE HARI VATIKA from any
+          claims or damages resulting from your misuse of our website, services,
+          or products. Governing Law These Terms are governed by the laws of .
+          Disputes will be resolved in courts located within the same
+          jurisdiction. Modifications We may update these Terms at any time.
+          Continued use of our services indicates your acceptance of the
+          changes. Contact Us For any questions or concerns, contact us at:
+          SHREE HARI VATIKA Email: enervistasolutions@gmail.com
         </section>
 
         <h1>Privacy Policy</h1>
