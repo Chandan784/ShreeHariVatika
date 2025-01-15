@@ -36,17 +36,8 @@ const Footer = () => {
         </div>
 
         {/* Promoter Info */}
-        <div>
-          <h3 className="text-lg font-bold text-white mb-4">Promoter</h3>
-          <p className="text-sm">
-            <span className="font-semibold">Subh Ventures</span>
-          </p>
-          <p className="text-sm">
-            Muskan Motwani, White Field, Bangalore, India
-          </p>
-        </div>
-      </div>
-
+      </div>{" "}
+      */
       {/* Footer Bottom */}
       <div className="mt-8 border-t border-gray-700 pt-4 text-center">
         <p className="text-sm">
