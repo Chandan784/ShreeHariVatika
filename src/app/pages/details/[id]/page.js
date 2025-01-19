@@ -155,7 +155,7 @@ const HotelRoomDetail = ({ params }) => {
       //hghghgh
 
       const response = await axios.post("/api/payment", {
-        amount: 1, // Pass the calculated total price
+        amount: hotelData.price, // Pass the calculated total price
         transactionId: transactionId,
         userId: "dhgdhgha", // Send userId along with other details
         redirectUrl: "https://www.shreeharivatika.in/", // Replace with actual redirect URL
