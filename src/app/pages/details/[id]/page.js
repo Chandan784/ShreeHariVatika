@@ -251,7 +251,7 @@ const HotelRoomDetail = ({ params }) => {
                 onClick={handlePayment}
                 className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition"
               >
-                Book now
+                Book
               </button>
               {/* </a> */}
             </div>
