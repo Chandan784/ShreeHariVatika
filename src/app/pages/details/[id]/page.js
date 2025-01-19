@@ -158,8 +158,8 @@ const HotelRoomDetail = ({ params }) => {
         amount: 1, // Pass the calculated total price
         transactionId: transactionId,
         userId: "dhgdhgha", // Send userId along with other details
-        redirectUrl: "/", // Replace with actual redirect URL
-        callbackUrl: "/", // Replace with actual callback URL
+        redirectUrl: "https://www.shreeharivatika.in/", // Replace with actual redirect URL
+        callbackUrl: "https://www.shreeharivatika.in/", // Replace with actual callback URL
       });
 
       console.log("Payment Response:", response.data); // Handle the response
