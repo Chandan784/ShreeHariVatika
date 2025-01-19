@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const HotelRoomDetail = ({ params }) => {
@@ -146,7 +146,36 @@ const HotelRoomDetail = ({ params }) => {
       ],
     },
   ];
+
   const hotelData = hotels.find((hotel) => hotel.id == id);
+
+  const handlePayment = async () => {
+    try {
+      const transactionId = `txn_${Date.now()}`; // Generate unique transaction ID
+
+      const response = await axios.post("/api/payment", {
+        amount: 1, // Pass the calculated total price
+        transactionId: transactionId,
+        userId: "dhgdhgha", // Send userId along with other details
+        redirectUrl: "/", // Replace with actual redirect URL
+        callbackUrl: "/", // Replace with actual callback URL
+      });
+
+      console.log("Payment Response:", response.data); // Handle the response
+
+      if (response.data.success) {
+        const redirectUrl =
+          response.data.data.instrumentResponse.redirectInfo.url;
+        // Redirect the user to the payment page
+        window.location.href = redirectUrl; // Redirect to the URL provided in the response
+      } else {
+        alert("Payment initiation failed.");
+      }
+    } catch (error) {
+      console.error("Error:", error.response || error.message);
+      alert("Payment failed. Please try again.");
+    }
+  };
 
   const whatsappLink = `https://wa.me/9438368531?text=I%20am%20interested%20in%20booking%20the%20${hotelData?.title}%20at%20₹${hotelData?.price}%20per%20night.`;
 
@@ -217,11 +246,14 @@ const HotelRoomDetail = ({ params }) => {
                   Persons: {hotelData?.persons || "Not Specified"}
                 </p>
               </div>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <button className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition">
-                  Book On WhatsApp
-                </button>
-              </a>
+              {/* <a href={whatsappLink} target="_blank" rel="noopener noreferrer"> */}
+              <button
+                onClick={handlePayment}
+                className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition"
+              >
+                Book now
+              </button>
+              {/* </a> */}
             </div>
           </div>
         </div>
