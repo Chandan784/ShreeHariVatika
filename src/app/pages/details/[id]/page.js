@@ -152,6 +152,7 @@ const HotelRoomDetail = ({ params }) => {
   const handlePayment = async () => {
     try {
       const transactionId = `txn_${Date.now()}`; // Generate unique transaction ID
+      //hghghgh
 
       const response = await axios.post("/api/payment", {
         amount: 1, // Pass the calculated total price
