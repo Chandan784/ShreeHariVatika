@@ -23,6 +23,7 @@ const PaymentStatusPage = ({ params }) => {
       bedCount: params.get("bedCount"),
       price: params.get("price"),
       transactionId: params.get("transactionId"),
+      cottageType: params.get("cottageType"),
     };
     return bookingData;
   };

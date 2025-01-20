@@ -1,6 +1,5 @@
 import React from "react";
-import Dashboard from "./pages/dashboard/page";
-import Sidebar from "../components/Sidebar";
+import AdminLogin from "../components/AdminLogin"; // Import the login component
 
 function Page() {
   return (
@@ -10,11 +9,10 @@ function Page() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Dashboard</title>
       </head>
-      <div className="flex">
-        <div className="flex-1 p-6">
-          <Sidebar />
-        </div>
-      </div>
+      <body>
+        <AdminLogin />
+      </body>
+      {/* Display Admin Login Page */}
     </>
   );
 }

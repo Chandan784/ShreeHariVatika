@@ -1,5 +1,4 @@
 "use client";
-// pages/dashboard/index.js
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/app/components/Sidebar";
 import { db } from "@/app/firebase";
@@ -81,36 +80,31 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex-1 p-6">
-        <h1 className="text-4xl font-bold">Dashboard</h1>
+    <div className="flex flex-col lg:flex-row">
+      {/* Sidebar */}
+
+      {/* Main Content */}
+      <div className="flex-1 ml-0  p-6 bg-gray-100">
+        <h1 className="text-3xl font-bold">Dashboard</h1>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold text-gray-700">
-              Total Cottages
-            </h3>
-            <p className="text-2xl font-bold text-gray-900">
-              {cottages.length}
-            </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+          <div className="bg-green-500 p-6 rounded-lg shadow-md text-center">
+            <h3 className="text-xl font-semibold text-white">Total Cottages</h3>
+            <p className="text-2xl font-bold text-white">{cottages.length}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold text-gray-700">Total Users</h3>
-            <p className="text-2xl font-bold text-gray-900">{users.length}</p>
+          <div className="bg-blue-500 p-6 rounded-lg shadow-md text-center">
+            <h3 className="text-xl font-semibold text-white">Total Users</h3>
+            <p className="text-2xl font-bold text-white">{users.length}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold text-gray-700">
-              Total Bookings
-            </h3>
-            <p className="text-2xl font-bold text-gray-900">
-              {bookings.length}
-            </p>
+          <div className="bg-yellow-500 p-6 rounded-lg shadow-md text-center">
+            <h3 className="text-xl font-semibold text-white">Total Bookings</h3>
+            <p className="text-2xl font-bold text-white">{bookings.length}</p>
           </div>
         </div>
 
         {/* Graphs */}
-        <div className="mt-8">
+        <div className="mt-8 space-y-6">
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 className="text-2xl font-semibold text-gray-700">
               Bookings Over Time

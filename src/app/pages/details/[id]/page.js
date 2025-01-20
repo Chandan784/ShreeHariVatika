@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, use } from "react";
 import dayjs from "dayjs";
+import Cottage from "@/app/admin/pages/cottage/page";
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
@@ -120,6 +121,7 @@ const HotelRoomDetail = ({ params }) => {
       bedCount, // This now represents the number of beds
       price,
       transactionId,
+      cottageType: hotelData.title,
     };
 
     // Convert the booking data into a query string
