@@ -19,6 +19,17 @@ export default function Login() {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
+      // Save user details to localStorage
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+
       // Check if the user exists in Firestore (in the 'users' collection)
       const userRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userRef);
@@ -55,7 +66,7 @@ export default function Login() {
           <p className="text-gray-700">
             Don’t have an account?{" "}
             <Link
-              href="/signup"
+              href="pages/signup"
               className="text-blue-600 hover:underline font-medium"
             >
               Sign up
