@@ -105,22 +105,33 @@ const HotelRoomDetail = ({ params }) => {
 
   const handleBooking = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-
     if (!user) {
       alert("Please log in to continue booking.");
       router.push("/pages/login");
       return;
     }
 
+    const transactionId = `txn_${Date.now()}`;
+    const bookingData = {
+      userId: user.uid,
+      checkInDate,
+      checkOutDate,
+      roomCount, // This now represents the number of rooms
+      bedCount, // This now represents the number of beds
+      price,
+      transactionId,
+    };
+
+    // Convert the booking data into a query string
+    const bookingQueryString = new URLSearchParams(bookingData).toString();
+
     try {
-      const transactionId = `txn_${Date.now()}`;
       const response = await axios.post("/api/payment", {
         amount: price,
-        transactionId: transactionId,
+        transactionId,
         userId: user.uid,
-        redirectUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}`,
-        callbackUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}`,
+        redirectUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
+        callbackUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
       });
 
       if (response.data.success) {

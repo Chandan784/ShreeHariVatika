@@ -1,14 +1,36 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { db } from "@/app/firebase"; // Firebase configuration (ensure Firebase is set up in your project)
+import { doc, setDoc, updateDoc, collection, addDoc } from "firebase/firestore";
 
 const PaymentStatusPage = ({ params }) => {
   const { transactionId } = params;
   const router = useRouter();
   const [status, setStatus] = useState("loading"); // 'loading', 'success', 'failure'
   const [errorMessage, setErrorMessage] = useState("");
+  const [bookingData, setBookingData] = useState(null);
+
+  // Extract query parameters
+  const getQueryParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    const bookingData = {
+      userId: params.get("userId"),
+      checkInDate: params.get("checkInDate"),
+      checkOutDate: params.get("checkOutDate"),
+      roomCount: params.get("roomCount"),
+      bedCount: params.get("bedCount"),
+      price: params.get("price"),
+      transactionId: params.get("transactionId"),
+    };
+    return bookingData;
+  };
 
   const fetchPaymentStatus = async () => {
+    const bookingData = getQueryParams(); // Get the booking data from query params
+    setBookingData(bookingData); // Set the booking data to state
+
     try {
       const response = await fetch("/api/ps", {
         method: "POST",
@@ -27,6 +49,9 @@ const PaymentStatusPage = ({ params }) => {
 
       if (data.success) {
         setStatus("success");
+
+        // Once payment is successful, save booking data to Firebase
+        await saveBookingDataToFirebase(bookingData);
       } else {
         setStatus("failure");
         setErrorMessage(data.message || "Payment failed or incomplete.");
@@ -38,7 +63,24 @@ const PaymentStatusPage = ({ params }) => {
     }
   };
 
-  // Trigger the API call when the page loads
+  // Save the booking data to Firebase when payment is successful
+  const saveBookingDataToFirebase = async (bookingData) => {
+    try {
+      // Add the booking data to Firestore's 'bookings' collection
+      const bookingRef = await addDoc(collection(db, "bookings"), bookingData);
+      console.log("Booking data saved to Firebase with ID:", bookingRef.id);
+
+      // Update the user's 'orders' array with the booking ID
+      const userRef = doc(db, "users", bookingData.userId);
+      await updateDoc(userRef, {
+        orders: [...(bookingData.orders || []), bookingRef.id],
+      });
+      console.log("User's orders updated with booking ID.");
+    } catch (error) {
+      console.error("Error saving booking data to Firebase:", error);
+    }
+  };
+
   useEffect(() => {
     fetchPaymentStatus();
   }, [transactionId]);
