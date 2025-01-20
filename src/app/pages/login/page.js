@@ -24,8 +24,9 @@ export default function Login() {
         "user",
         JSON.stringify({
           uid: user.uid,
-          displayName: user.displayName,
+          name: user.displayName,
           email: user.email,
+          phoneNumber,
           photoURL: user.photoURL,
         })
       );
