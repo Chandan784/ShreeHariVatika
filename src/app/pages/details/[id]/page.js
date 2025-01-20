@@ -105,7 +105,7 @@ const HotelRoomDetail = ({ params }) => {
 
   const handleBooking = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user.uid);
+    console.log(user);
 
     if (!user) {
       alert("Please log in to continue booking.");
