@@ -18,6 +18,7 @@ export default function Login() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      console.log(user);
 
       // Save user details to localStorage
       localStorage.setItem(
@@ -26,7 +27,6 @@ export default function Login() {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
-          phoneNumber,
           photoURL: user.photoURL,
         })
       );
