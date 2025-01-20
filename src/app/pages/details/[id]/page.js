@@ -109,7 +109,7 @@ const HotelRoomDetail = ({ params }) => {
 
     if (!user) {
       alert("Please log in to continue booking.");
-      router.push("/login");
+      router.push("/pages/login");
       return;
     }
 
