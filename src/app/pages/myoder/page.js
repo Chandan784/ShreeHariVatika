@@ -20,7 +20,7 @@ const ProfilePage = () => {
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("user"); // Remove user data from localStorage
-    router.push("/login"); // Redirect to login page after logout
+    router.push("pages/login"); // Redirect to login page after logout
   };
 
   // If the user data is not available yet (loading)
