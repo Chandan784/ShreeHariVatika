@@ -11,6 +11,7 @@ export default function Signup() {
   const [message, setMessage] = useState("");
   const [isPhoneInputVisible, setPhoneInputVisible] = useState(false);
   const [user, setUser] = useState(null); // Holds the authenticated user
+  const [isExistingUser, setIsExistingUser] = useState(false); // Track if user is already in the system
   const router = useRouter();
 
   // Handle Google Login
@@ -25,6 +26,16 @@ export default function Signup() {
 
       if (userDoc.exists()) {
         setMessage("Welcome back!");
+        setIsExistingUser(true); // Set flag for existing user
+        // Store user data in localStorage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+          })
+        );
         router.push("/dashboard");
       } else {
         // Show phone number input for new users
@@ -47,20 +58,44 @@ export default function Signup() {
     }
 
     try {
-      // Store user data in Firestore
+      // Store user data in Firestore (add an empty orders array)
       const userRef = doc(db, "users", user.uid);
       await setDoc(userRef, {
         name: user.displayName,
         email: user.email,
         phoneNumber,
+        orders: [], // Add an empty orders array
         createdAt: new Date(),
       });
 
+      // Save user data to localStorage after signup
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          phoneNumber,
+        })
+      );
+
       setMessage("Signup successful! Redirecting...");
-      router.push("/");
+      router.push("/"); // Redirect to homepage or dashboard
     } catch (error) {
       console.error("Error saving user data:", error);
       setMessage("Failed to complete signup. Please try again.");
+    }
+  };
+
+  // Handle Login for existing users
+  const handleLogin = async () => {
+    try {
+      // This can be replaced with a login function using Firebase auth
+      // For simplicity, here I'm redirecting to the login page
+      router.push("pages/login");
+    } catch (error) {
+      console.error("Error during login:", error);
+      setMessage("Login failed. Please try again.");
     }
   };
 
@@ -70,7 +105,7 @@ export default function Signup() {
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
 
         {/* Google Sign-In Button */}
-        {!isPhoneInputVisible && (
+        {!isPhoneInputVisible && !isExistingUser && (
           <button
             onClick={handleGoogleLogin}
             className="w-full bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-500 shadow-md mb-4"
@@ -79,8 +114,21 @@ export default function Signup() {
           </button>
         )}
 
+        {/* Display Login for existing users */}
+        {isExistingUser && (
+          <div className="text-center mb-4">
+            <p className="text-gray-700">Already have an account?</p>
+            <button
+              onClick={handleLogin}
+              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-500 shadow-md mt-2"
+            >
+              Login
+            </button>
+          </div>
+        )}
+
         {/* Phone Number Input */}
-        {isPhoneInputVisible && (
+        {isPhoneInputVisible && !isExistingUser && (
           <form onSubmit={handlePhoneNumberSubmit}>
             <input
               type="text"
