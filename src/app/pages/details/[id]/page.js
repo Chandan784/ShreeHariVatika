@@ -1,19 +1,31 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState, useEffect, use } from "react";
+import dayjs from "dayjs";
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
   const { id } = params;
 
+  const today = dayjs().format("YYYY-MM-DD");
+  const [checkInDate, setCheckInDate] = useState(today);
+  const [checkOutDate, setCheckOutDate] = useState(
+    dayjs(today).add(1, "day").format("YYYY-MM-DD")
+  ); // Default +1 day
+  const [roomCount, setRoomCount] = useState(1);
+  const [bedCount, setBedCount] = useState(1);
+  const [price, setPrice] = useState(0);
+
   const hotels = [
     {
       id: 1,
+      type: "dormitory",
       title: "Deluxe Dormitory Tent",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
       image: "/photos/deluxtent.jpg",
-      price: "2000",
+      price: 1,
       beds: "No bed only floor mattress",
       persons: "16 Persons",
       facilities: [
@@ -36,96 +48,14 @@ const HotelRoomDetail = ({ params }) => {
       ],
     },
     {
-      id: 2,
-      title: "Premium Dormitory Tent",
-      description:
-        "Experience the best of luxury and comfort in our selected hotels.",
-      image: "/photos/dormitory.jpg",
-      price: "3000",
-      beds: "Folding Beds",
-      persons: "8 Persons",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-    },
-    {
-      id: 3,
-      title: "Customizable Cottage Tent",
-      description: "Enjoy the finest amenities and exceptional service.",
-      image:
-        "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
-      price: "As per requirement",
-      beds: "Custom",
-      persons: "",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-    },
-    {
       id: 4,
-      title: "Luxury Vip Cottage",
+      type: "cottage",
+      title: "Luxury VIP Cottage",
       description: "Affordable comfort for your travel needs.",
       image: "/photos/luxuryvip.jpg",
-      price: "21000",
+      price: 21000,
       beds: "2 double beds",
       persons: "Up to 8 Persons",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-    },
-    {
-      id: 5,
-      title: "Vip Cottage",
-      description: "Affordable comfort for your travel needs.",
-      image: "/photos/vipcottage.jpg",
-      price: "11000",
-      beds: "1 King Bed",
-      persons: "Up to 4 Persons",
       facilities: [
         "TV",
         "Blanket",
@@ -149,26 +79,54 @@ const HotelRoomDetail = ({ params }) => {
 
   const hotelData = hotels.find((hotel) => hotel.id == id);
 
-  const handlePayment = async () => {
+  const calculatePrice = () => {
+    if (!hotelData || !checkInDate || !checkOutDate) return 0;
+
+    const basePrice = hotelData.price || 0;
+    const diff = dayjs(checkOutDate).diff(dayjs(checkInDate), "day");
+    const days = diff > 0 ? diff : 1;
+
+    const total =
+      basePrice *
+      (hotelData.type === "dormitory" ? bedCount : roomCount) *
+      days;
+
+    const gst = total * 0.18; // 18% GST
+    return total + gst;
+  };
+
+  const handleDateChange = () => {
+    setPrice(calculatePrice());
+  };
+
+  useEffect(() => {
+    setPrice(calculatePrice());
+  }, [checkInDate, checkOutDate, roomCount, bedCount]);
+
+  const handleBooking = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.uid);
+
+    if (!user) {
+      alert("Please log in to continue booking.");
+      router.push("/login");
+      return;
+    }
+
     try {
-      const transactionId = `txn_${Date.now()}`; // Generate unique transaction ID
-      //hghghgh
-
+      const transactionId = `txn_${Date.now()}`;
       const response = await axios.post("/api/payment", {
-        amount: hotelData.price, // Pass the calculated total price
+        amount: price,
         transactionId: transactionId,
-        userId: "dhgdhgha", // Send userId along with other details
-        redirectUrl: "https://www.shreeharivatika.in/", // Replace with actual redirect URL
-        callbackUrl: "https://www.shreeharivatika.in/", // Replace with actual callback URL
+        userId: user.uid,
+        redirectUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}`,
+        callbackUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}`,
       });
-
-      console.log("Payment Response:", response.data); // Handle the response
 
       if (response.data.success) {
         const redirectUrl =
           response.data.data.instrumentResponse.redirectInfo.url;
-        // Redirect the user to the payment page
-        window.location.href = redirectUrl; // Redirect to the URL provided in the response
+        window.location.href = redirectUrl;
       } else {
         alert("Payment initiation failed.");
       }
@@ -178,88 +136,139 @@ const HotelRoomDetail = ({ params }) => {
     }
   };
 
-  const whatsappLink = `https://wa.me/9438368531?text=I%20am%20interested%20in%20booking%20the%20${hotelData?.title}%20at%20₹${hotelData?.price}%20per%20night.`;
-
   return (
-    <>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Image Section */}
-        <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-10 shadow-lg">
-          {hotelData?.image && (
-            <img
-              src={hotelData.image}
-              alt={hotelData.title}
-              className="w-full h-full object-cover"
-            />
-          )}
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden mb-10 shadow-lg">
+        {hotelData?.image && (
+          <img
+            src={hotelData.image}
+            alt={hotelData.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+
+      <div className="flex flex-col lg:flex-row lg:space-x-12 mb-12">
+        <div className="flex-1 mb-6 lg:mb-0">
+          <h1 className="text-4xl font-bold text-gray-800 mb-6">
+            {hotelData?.title}
+          </h1>
+          <p className="text-lg text-gray-700 mb-8">{hotelData?.description}</p>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Amenities
+          </h2>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-lg text-gray-600">
+            {hotelData?.facilities?.map((facility, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <svg
+                  className="w-5 h-5 text-blue-600"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>{facility}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Details Section */}
-        <div className="flex flex-col lg:flex-row lg:space-x-12 mb-12">
-          <div className="flex-1 mb-6 lg:mb-0">
-            <h1 className="text-4xl font-bold text-gray-800 mb-6">
-              {hotelData?.title}
-            </h1>
-            <p className="text-lg text-gray-700 mb-8">
-              {hotelData?.description}
-            </p>
-
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Amenities
-            </h2>
-            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-lg text-gray-600">
-              {hotelData?.facilities?.map((facility, index) => (
-                <li key={index} className="flex items-center space-x-2">
-                  <svg
-                    className="w-5 h-5 text-blue-600"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span>{facility}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex-shrink-0">
-            <div className="bg-white shadow-lg rounded-xl p-6">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  Price:{" "}
-                  <span className="text-blue-600 font-bold">
-                    ₹{hotelData?.price}
-                  </span>
-                  <span> / bed or mattress</span>
-                </h2>
-                <p className="text-gray-600 text-lg">
-                  Beds: {hotelData?.beds || "Not Specified"}
-                </p>
-                <p className="text-gray-600 text-lg">
-                  Persons: {hotelData?.persons || "Not Specified"}
-                </p>
+        <div className="flex-shrink-0">
+          <div className="bg-white shadow-lg rounded-xl p-6">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                Price:{" "}
+                <span className="text-blue-600 font-bold">
+                  ₹{price.toFixed(2)}
+                </span>
+              </h2>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">
+                  Check-in Date
+                </label>
+                <input
+                  type="date"
+                  value={checkInDate}
+                  onChange={(e) => {
+                    setCheckInDate(e.target.value);
+                    handleDateChange();
+                  }}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                />
               </div>
-              {/* <a href={whatsappLink} target="_blank" rel="noopener noreferrer"> */}
-              <button
-                onClick={handlePayment}
-                className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition"
-              >
-                Book
-              </button>
-              {/* </a> */}
+              <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">
+                  Check-out Date
+                </label>
+                <input
+                  type="date"
+                  value={checkOutDate}
+                  onChange={(e) => {
+                    setCheckOutDate(e.target.value);
+                    handleDateChange();
+                  }}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">
+                  {hotelData?.type === "dormitory" ? "Beds" : "Rooms"}
+                </label>
+                <div className="flex items-center space-x-4">
+                  <button
+                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    onClick={() => {
+                      if (hotelData?.type === "dormitory") {
+                        setBedCount((prev) => Math.max(1, prev - 1));
+                      } else {
+                        setRoomCount((prev) => Math.max(1, prev - 1));
+                      }
+                      handleDateChange();
+                    }}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="text"
+                    value={
+                      hotelData?.type === "dormitory" ? bedCount : roomCount
+                    }
+                    readOnly
+                    className="w-16 text-center border border-gray-300 rounded-lg px-3 py-2 bg-white"
+                  />
+                  <button
+                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    onClick={() => {
+                      if (hotelData?.type === "dormitory") {
+                        setBedCount((prev) => prev + 1);
+                      } else {
+                        setRoomCount((prev) => prev + 1);
+                      }
+                      handleDateChange();
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
+            <button
+              onClick={handleBooking}
+              className="w-full px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-500 shadow-lg transition"
+            >
+              Book
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
