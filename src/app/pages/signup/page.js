@@ -76,6 +76,7 @@ export default function Signup() {
           name: user.displayName,
           email: user.email,
           phoneNumber,
+          photoURL: user.photoURL,
         })
       );
 
