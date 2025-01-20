@@ -25,7 +25,7 @@ const HotelRoomDetail = ({ params }) => {
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
       image: "/photos/deluxtent.jpg",
-      price: 1,
+      price: 2000,
       beds: "No bed only floor mattress",
       persons: "16 Persons",
       facilities: [
