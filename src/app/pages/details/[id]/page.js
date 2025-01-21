@@ -22,7 +22,7 @@ const HotelRoomDetail = ({ params }) => {
     {
       id: 1,
       title: "Deluxe Dormitory Tent",
-      typr:"dormitory",
+      type: "dormitory",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
       image: "/photos/deluxtent.jpg",
@@ -50,7 +50,7 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 2,
-      type:"dormitory",
+      type: "dormitory",
       title: "Premium Dormitory Tent",
       description:
         "Experience the best of luxury and comfort in our selected hotels.",
@@ -79,7 +79,7 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 3,
-      type:"dormitory",
+      type: "dormitory",
       title: "Customizable Cottage Tent",
       description: "Enjoy the finest amenities and exceptional service.",
       image:
@@ -108,7 +108,7 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 4,
-      type:"cottage"
+      type: "cottage",
       title: "Luxury Vip Cottage",
       description: "Affordable comfort for your travel needs.",
       image: "/photos/luxuryvip.jpg",
@@ -136,7 +136,7 @@ const HotelRoomDetail = ({ params }) => {
     },
     {
       id: 5,
-      type:"cottage",
+      type: "cottage",
       title: "Vip Cottage",
       description: "Affordable comfort for your travel needs.",
       image: "/photos/vipcottage.jpg",
