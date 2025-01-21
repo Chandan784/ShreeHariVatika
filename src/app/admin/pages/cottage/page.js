@@ -9,7 +9,6 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import Sidebar from "@/app/components/Sidebar";
 
 const Cottage = () => {
   const [cottages, setCottages] = useState([]);
@@ -20,10 +19,11 @@ const Cottage = () => {
     beds: "",
     persons: "",
     facilities: "",
+    type: "Dormitory", // Default value for the dropdown
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentCottageId, setCurrentCottageId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const cottagesRef = collection(db, "cottages");
 
@@ -65,6 +65,7 @@ const Cottage = () => {
       beds: "",
       persons: "",
       facilities: "",
+      type: "Dormitory", // Reset to default
     });
   };
 
@@ -110,6 +111,7 @@ const Cottage = () => {
                 <p className="mt-2 font-semibold">Price: {cottage.price}</p>
                 <p className="mt-2 font-semibold">Beds: {cottage.beds}</p>
                 <p className="mt-2 font-semibold">Persons: {cottage.persons}</p>
+                <p className="mt-2 font-semibold">Type: {cottage.type}</p>
                 <p className="mt-2 text-sm text-gray-600">
                   Facilities: {cottage.facilities}
                 </p>
@@ -180,6 +182,15 @@ const Cottage = () => {
                     onChange={handleChange}
                     className="border border-gray-300 p-2 rounded-lg w-full"
                   />
+                  <select
+                    name="type"
+                    value={newCottage.type}
+                    onChange={handleChange}
+                    className="border border-gray-300 p-2 rounded-lg w-full"
+                  >
+                    <option value="Dormitory">Dormitory</option>
+                    <option value="Cottage">Cottage</option>
+                  </select>
                   <div className="flex justify-end space-x-2">
                     <button
                       type="button"

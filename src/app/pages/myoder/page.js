@@ -13,14 +13,14 @@ const ProfilePage = () => {
     if (storedUser) {
       setUser(storedUser); // Set the user data if it exists
     } else {
-      router.push("pages/login"); // Redirect to login if no user data is found
+      router.push("/pages/login"); // Redirect to login if no user data is found
     }
   }, [router]);
 
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("user"); // Remove user data from localStorage
-    router.push("pages/login"); // Redirect to login page after logout
+    router.push("/pages/login"); // Redirect to login page after logout
   };
 
   // If the user data is not available yet (loading)

@@ -36,7 +36,7 @@ export default function Signup() {
             email: user.email,
           })
         );
-        router.push("/dashboard");
+        router.push("/");
       } else {
         // Show phone number input for new users
         setUser(user); // Save the user details
@@ -88,25 +88,13 @@ export default function Signup() {
     }
   };
 
-  // Handle Login for existing users
-  const handleLogin = async () => {
-    try {
-      // This can be replaced with a login function using Firebase auth
-      // For simplicity, here I'm redirecting to the login page
-      router.push("pages/login");
-    } catch (error) {
-      console.error("Error during login:", error);
-      setMessage("Login failed. Please try again.");
-    }
-  };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 shadow-lg rounded-lg max-w-md w-full">
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
 
         {/* Google Sign-In Button */}
-        {!isPhoneInputVisible && !isExistingUser && (
+        {!isPhoneInputVisible && (
           <button
             onClick={handleGoogleLogin}
             className="w-full bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-500 shadow-md mb-4"
@@ -115,21 +103,8 @@ export default function Signup() {
           </button>
         )}
 
-        {/* Display Login for existing users */}
-        {isExistingUser && (
-          <div className="text-center mb-4">
-            <p className="text-gray-700">Already have an account?</p>
-            <button
-              onClick={handleLogin}
-              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-500 shadow-md mt-2"
-            >
-              Login
-            </button>
-          </div>
-        )}
-
         {/* Phone Number Input */}
-        {isPhoneInputVisible && !isExistingUser && (
+        {isPhoneInputVisible && (
           <form onSubmit={handlePhoneNumberSubmit}>
             <input
               type="text"
@@ -145,6 +120,19 @@ export default function Signup() {
               Complete Signup
             </button>
           </form>
+        )}
+
+        {/* Already have an account */}
+        {!isPhoneInputVisible && (
+          <div className="text-center mt-4">
+            <p className="text-gray-700">Already have an account?</p>
+            <button
+              onClick={() => router.push("/pages/login")}
+              className="w-full mt-2 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-500 shadow-md"
+            >
+              Login
+            </button>
+          </div>
         )}
 
         {/* Display Message */}
