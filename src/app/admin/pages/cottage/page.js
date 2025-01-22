@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { db } from "@/app/firebase";
+import { db, storage } from "@/app/firebase"; // Ensure Firebase is properly initialized
 import {
   collection,
   getDocs,
@@ -9,6 +9,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Cottage = () => {
   const [cottages, setCottages] = useState([]);
@@ -19,8 +20,10 @@ const Cottage = () => {
     beds: "",
     persons: "",
     facilities: "",
-    type: "Dormitory", // Default value for the dropdown
+    type: "Dormitory",
+    image: "", // New field for the image URL
   });
+  const [selectedImage, setSelectedImage] = useState(null); // For storing the selected file
   const [isEditing, setIsEditing] = useState(false);
   const [currentCottageId, setCurrentCottageId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,8 +40,16 @@ const Cottage = () => {
     fetchCottages();
   }, []);
 
-  // Handle create and edit
+  // Handle create or edit
   const handleSave = async () => {
+    if (selectedImage) {
+      // Upload the image to Firebase Storage
+      const imageRef = ref(storage, `cottage-images/${selectedImage.name}`);
+      await uploadBytes(imageRef, selectedImage);
+      const imageUrl = await getDownloadURL(imageRef);
+      newCottage.image = imageUrl; // Set the image URL in the cottage object
+    }
+
     if (isEditing) {
       await updateDoc(doc(db, "cottages", currentCottageId), newCottage);
       setIsEditing(false);
@@ -46,6 +57,7 @@ const Cottage = () => {
     } else {
       await addDoc(cottagesRef, newCottage);
     }
+
     fetchCottages();
     resetForm();
     setIsModalOpen(false); // Close modal after saving
@@ -54,6 +66,11 @@ const Cottage = () => {
   // Handle form input change
   const handleChange = (e) => {
     setNewCottage({ ...newCottage, [e.target.name]: e.target.value });
+  };
+
+  // Handle image selection
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]);
   };
 
   // Reset the form state
@@ -65,8 +82,10 @@ const Cottage = () => {
       beds: "",
       persons: "",
       facilities: "",
-      type: "Dormitory", // Reset to default
+      type: "Dormitory",
+      image: "",
     });
+    setSelectedImage(null);
   };
 
   // Open modal for editing
@@ -106,6 +125,13 @@ const Cottage = () => {
                 key={cottage.id}
                 className="bg-white p-6 rounded-lg shadow-md"
               >
+                {cottage.image && (
+                  <img
+                    src={cottage.image}
+                    alt={cottage.title}
+                    className="w-full h-40 object-cover rounded-lg mb-4"
+                  />
+                )}
                 <h3 className="text-xl font-semibold">{cottage.title}</h3>
                 <p>{cottage.description}</p>
                 <p className="mt-2 font-semibold">Price: {cottage.price}</p>
@@ -191,6 +217,11 @@ const Cottage = () => {
                     <option value="Dormitory">Dormitory</option>
                     <option value="Cottage">Cottage</option>
                   </select>
+                  <input
+                    type="file"
+                    onChange={handleImageChange}
+                    className="border border-gray-300 p-2 rounded-lg w-full"
+                  />
                   <div className="flex justify-end space-x-2">
                     <button
                       type="button"
