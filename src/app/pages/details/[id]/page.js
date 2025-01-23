@@ -1,9 +1,8 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import Cottage from "@/app/admin/pages/cottage/page";
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
@@ -17,17 +16,17 @@ const HotelRoomDetail = ({ params }) => {
   const [roomCount, setRoomCount] = useState(1);
   const [bedCount, setBedCount] = useState(1);
   const [price, setPrice] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const hotels = [
     {
       id: 1,
       title: "Deluxe Dormitory Tent",
       type: "dormitory",
-      description:
-        "Experience the best of luxury and comfort in our selected hotels.",
+      description: "Experience the best of luxury and comfort in our tents.",
       image: "/photos/deluxtent.jpg",
-      price: "2000",
-      beds: "No bed only floor mattress",
+      price: 2000,
+      beds: "No bed, only floor mattress",
       persons: "16 Persons",
       facilities: [
         "TV",
@@ -47,16 +46,15 @@ const HotelRoomDetail = ({ params }) => {
         "Medical facilities",
         "Food Court",
       ],
-      stock: 20,
+      inventory: 20,
     },
     {
       id: 2,
       type: "dormitory",
       title: "Premium Dormitory Tent",
-      description:
-        "Experience the best of luxury and comfort in our selected hotels.",
+      description: "Premium experience in dormitory-style tents.",
       image: "/photos/dormitory.jpg",
-      price: "3000",
+      price: 3000,
       beds: "Folding Beds",
       persons: "8 Persons",
       facilities: [
@@ -77,45 +75,15 @@ const HotelRoomDetail = ({ params }) => {
         "Medical facilities",
         "Food Court",
       ],
-      stock: 30,
+      inventory: 30,
     },
     {
       id: 3,
-      type: "dormitory",
-      title: "Customizable Cottage Tent",
-      description: "Enjoy the finest amenities and exceptional service.",
-      image:
-        "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
-      price: "As per requirement",
-      beds: "Custom",
-      persons: "",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-      stock: 30,
-    },
-    {
-      id: 4,
       type: "cottage",
-      title: "Luxury Vip Cottage",
+      title: "Luxury VIP Cottage",
       description: "Affordable comfort for your travel needs.",
       image: "/photos/luxuryvip.jpg",
-      price: "21000",
+      price: 21000,
       beds: "2 double beds",
       persons: "Up to 8 Persons",
       facilities: [
@@ -136,7 +104,7 @@ const HotelRoomDetail = ({ params }) => {
         "Medical facilities",
         "Food Court",
       ],
-      stock: 20,
+      inventory: 10,
     },
   ];
   const hotelData = hotels.find((hotel) => hotel.id == id);
@@ -178,29 +146,23 @@ const HotelRoomDetail = ({ params }) => {
       userId: user.uid,
       checkInDate,
       checkOutDate,
-      roomCount, // This now represents the number of rooms
-      bedCount, // This now represents the number of beds
+      roomCount,
+      bedCount,
       price,
       transactionId,
       cottageType: hotelData.title,
     };
-
-    // Convert the booking data into a query string
-    const bookingQueryString = new URLSearchParams(bookingData).toString();
 
     try {
       const response = await axios.post("/api/payment", {
         amount: price,
         transactionId,
         userId: user.uid,
-        redirectUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
-        callbackUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
       });
 
       if (response.data.success) {
-        const redirectUrl =
+        window.location.href =
           response.data.data.instrumentResponse.redirectInfo.url;
-        window.location.href = redirectUrl;
       } else {
         alert("Payment initiation failed.");
       }
@@ -208,6 +170,26 @@ const HotelRoomDetail = ({ params }) => {
       console.error("Error:", error.response || error.message);
       alert("Payment failed. Please try again.");
     }
+  };
+
+  const handleCountChange = (isIncrease) => {
+    if (hotelData.type === "dormitory") {
+      const newBedCount = bedCount + (isIncrease ? 1 : -1);
+      if (newBedCount > hotelData.inventory) {
+        setErrorMessage("Out of Stock");
+        return;
+      }
+      setBedCount(Math.max(1, newBedCount));
+    } else {
+      const newRoomCount = roomCount + (isIncrease ? 1 : -1);
+      if (newRoomCount > hotelData.inventory) {
+        setErrorMessage("Out of Stock");
+        return;
+      }
+      setRoomCount(Math.max(1, newRoomCount));
+    }
+    setErrorMessage("");
+    handleDateChange();
   };
 
   return (
@@ -298,14 +280,7 @@ const HotelRoomDetail = ({ params }) => {
                 <div className="flex items-center space-x-4">
                   <button
                     className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-                    onClick={() => {
-                      if (hotelData?.type === "dormitory") {
-                        setBedCount((prev) => Math.max(1, prev - 1));
-                      } else {
-                        setRoomCount((prev) => Math.max(1, prev - 1));
-                      }
-                      handleDateChange();
-                    }}
+                    onClick={() => handleCountChange(false)}
                   >
                     -
                   </button>
@@ -319,18 +294,14 @@ const HotelRoomDetail = ({ params }) => {
                   />
                   <button
                     className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-                    onClick={() => {
-                      if (hotelData?.type === "dormitory") {
-                        setBedCount((prev) => prev + 1);
-                      } else {
-                        setRoomCount((prev) => prev + 1);
-                      }
-                      handleDateChange();
-                    }}
+                    onClick={() => handleCountChange(true)}
                   >
                     +
                   </button>
                 </div>
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+                )}
               </div>
             </div>
             <button

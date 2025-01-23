@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { db, storage } from "@/app/firebase"; // Ensure Firebase is properly initialized
+import { db } from "@/app/firebase"; // Ensure Firebase is properly initialized
 import {
   collection,
   getDocs,
@@ -9,7 +9,6 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Cottage = () => {
   const [cottages, setCottages] = useState([]);
@@ -21,9 +20,9 @@ const Cottage = () => {
     persons: "",
     facilities: "",
     type: "Dormitory",
-    image: "", // New field for the image URL
+    image: "", // Field for image URL
+    inventory: "", // New field for inventory
   });
-  const [selectedImage, setSelectedImage] = useState(null); // For storing the selected file
   const [isEditing, setIsEditing] = useState(false);
   const [currentCottageId, setCurrentCottageId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,14 +41,6 @@ const Cottage = () => {
 
   // Handle create or edit
   const handleSave = async () => {
-    if (selectedImage) {
-      // Upload the image to Firebase Storage
-      const imageRef = ref(storage, `cottage-images/${selectedImage.name}`);
-      await uploadBytes(imageRef, selectedImage);
-      const imageUrl = await getDownloadURL(imageRef);
-      newCottage.image = imageUrl; // Set the image URL in the cottage object
-    }
-
     if (isEditing) {
       await updateDoc(doc(db, "cottages", currentCottageId), newCottage);
       setIsEditing(false);
@@ -68,11 +59,6 @@ const Cottage = () => {
     setNewCottage({ ...newCottage, [e.target.name]: e.target.value });
   };
 
-  // Handle image selection
-  const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
-  };
-
   // Reset the form state
   const resetForm = () => {
     setNewCottage({
@@ -84,8 +70,8 @@ const Cottage = () => {
       facilities: "",
       type: "Dormitory",
       image: "",
+      inventory: "",
     });
-    setSelectedImage(null);
   };
 
   // Open modal for editing
@@ -138,6 +124,9 @@ const Cottage = () => {
                 <p className="mt-2 font-semibold">Beds: {cottage.beds}</p>
                 <p className="mt-2 font-semibold">Persons: {cottage.persons}</p>
                 <p className="mt-2 font-semibold">Type: {cottage.type}</p>
+                <p className="mt-2 font-semibold">
+                  Inventory: {cottage.inventory}
+                </p>
                 <p className="mt-2 text-sm text-gray-600">
                   Facilities: {cottage.facilities}
                 </p>
@@ -218,8 +207,19 @@ const Cottage = () => {
                     <option value="Cottage">Cottage</option>
                   </select>
                   <input
-                    type="file"
-                    onChange={handleImageChange}
+                    type="text"
+                    name="image"
+                    placeholder="Image URL"
+                    value={newCottage.image}
+                    onChange={handleChange}
+                    className="border border-gray-300 p-2 rounded-lg w-full"
+                  />
+                  <input
+                    type="number"
+                    name="inventory"
+                    placeholder="Inventory"
+                    value={newCottage.inventory}
+                    onChange={handleChange}
                     className="border border-gray-300 p-2 rounded-lg w-full"
                   />
                   <div className="flex justify-end space-x-2">
