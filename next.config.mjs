@@ -11,6 +11,7 @@ const nextConfig = {
       "www.bing.com",
       "via.placeholder.com",
       "images.app.goo.gl",
+      "drive.google.com",
     ], // Add the domain that hosts your image
   },
 };
