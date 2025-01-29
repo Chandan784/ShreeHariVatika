@@ -114,7 +114,7 @@ const Cottage = () => {
                 {cottage.image && (
                   <img
                     src={cottage.image}
-                    alt={cottage.title}
+                    alt="Google Drive Image"
                     className="w-full h-40 object-cover rounded-lg mb-4"
                   />
                 )}

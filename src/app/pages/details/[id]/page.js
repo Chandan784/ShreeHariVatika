@@ -3,6 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { db } from "@/app/firebase"; // Ensure Firebase is properly initialized
+import { doc, getDoc } from "firebase/firestore";
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
@@ -16,98 +18,28 @@ const HotelRoomDetail = ({ params }) => {
   const [roomCount, setRoomCount] = useState(1);
   const [bedCount, setBedCount] = useState(1);
   const [price, setPrice] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [hotelData, setHotelData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const hotels = [
-    {
-      id: 1,
-      title: "Deluxe Dormitory Tent",
-      type: "dormitory",
-      description: "Experience the best of luxury and comfort in our tents.",
-      image: "/photos/deluxtent.jpg",
-      price: 2000,
-      beds: "No bed, only floor mattress",
-      persons: "16 Persons",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-      inventory: 20,
-    },
-    {
-      id: 2,
-      type: "dormitory",
-      title: "Premium Dormitory Tent",
-      description: "Premium experience in dormitory-style tents.",
-      image: "/photos/dormitory.jpg",
-      price: 3000,
-      beds: "Folding Beds",
-      persons: "8 Persons",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-      inventory: 30,
-    },
-    {
-      id: 3,
-      type: "cottage",
-      title: "Luxury VIP Cottage",
-      description: "Affordable comfort for your travel needs.",
-      image: "/photos/luxuryvip.jpg",
-      price: 21000,
-      beds: "2 double beds",
-      persons: "Up to 8 Persons",
-      facilities: [
-        "TV",
-        "Blanket",
-        "Pillow",
-        "Bonfire",
-        "Breakfast",
-        "Lunch",
-        "Evening Snack",
-        "Dinner",
-        "Bathroom",
-        "Morning Satsang",
-        "Evening Bhajan and Kirtan",
-        "Mattress",
-        "Bedsheet & Towel",
-        "Wifi",
-        "Medical facilities",
-        "Food Court",
-      ],
-      inventory: 10,
-    },
-  ];
-  const hotelData = hotels.find((hotel) => hotel.id == id);
+  useEffect(() => {
+    const fetchHotel = async () => {
+      if (!id) return;
+      try {
+        const hotelDoc = await getDoc(doc(db, "cottages", id));
+        if (hotelDoc.exists()) {
+          setHotelData({ id: hotelDoc.id, ...hotelDoc.data() });
+        } else {
+          console.error("No such hotel found!");
+        }
+      } catch (error) {
+        console.error("Error fetching hotel:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHotel();
+  }, [id]);
 
   const calculatePrice = () => {
     if (!hotelData || !checkInDate || !checkOutDate) return 0;
@@ -125,13 +57,9 @@ const HotelRoomDetail = ({ params }) => {
     return total + gst;
   };
 
-  const handleDateChange = () => {
-    setPrice(calculatePrice());
-  };
-
   useEffect(() => {
     setPrice(calculatePrice());
-  }, [checkInDate, checkOutDate, roomCount, bedCount]);
+  }, [checkInDate, checkOutDate, roomCount, bedCount, hotelData]);
 
   const handleBooking = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -153,16 +81,21 @@ const HotelRoomDetail = ({ params }) => {
       cottageType: hotelData.title,
     };
 
+    const bookingQueryString = new URLSearchParams(bookingData).toString();
+
     try {
       const response = await axios.post("/api/payment", {
         amount: price,
         transactionId,
         userId: user.uid,
+        redirectUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
+        callbackUrl: `https://shreeharivatika.in/pages/payment-status/${transactionId}?${bookingQueryString}`,
       });
 
       if (response.data.success) {
-        window.location.href =
+        const redirectUrl =
           response.data.data.instrumentResponse.redirectInfo.url;
+        window.location.href = redirectUrl;
       } else {
         alert("Payment initiation failed.");
       }
@@ -172,25 +105,13 @@ const HotelRoomDetail = ({ params }) => {
     }
   };
 
-  const handleCountChange = (isIncrease) => {
-    if (hotelData.type === "dormitory") {
-      const newBedCount = bedCount + (isIncrease ? 1 : -1);
-      if (newBedCount > hotelData.inventory) {
-        setErrorMessage("Out of Stock");
-        return;
-      }
-      setBedCount(Math.max(1, newBedCount));
-    } else {
-      const newRoomCount = roomCount + (isIncrease ? 1 : -1);
-      if (newRoomCount > hotelData.inventory) {
-        setErrorMessage("Out of Stock");
-        return;
-      }
-      setRoomCount(Math.max(1, newRoomCount));
-    }
-    setErrorMessage("");
-    handleDateChange();
-  };
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  if (!hotelData) {
+    return <div className="text-center py-10">Hotel not found</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -214,25 +135,29 @@ const HotelRoomDetail = ({ params }) => {
             Amenities
           </h2>
           <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-lg text-gray-600">
-            {hotelData?.facilities?.map((facility, index) => (
-              <li key={index} className="flex items-center space-x-2">
-                <svg
-                  className="w-5 h-5 text-blue-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span>{facility}</span>
-              </li>
-            ))}
+            {hotelData?.facilities ? (
+              hotelData.facilities.split(",").map((facility, index) => (
+                <li key={index} className="flex items-center space-x-2">
+                  <svg
+                    className="w-5 h-5 text-blue-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>{facility.trim()}</span>
+                </li>
+              ))
+            ) : (
+              <li className="text-gray-500">No amenities available</li>
+            )}
           </ul>
         </div>
 
@@ -252,10 +177,7 @@ const HotelRoomDetail = ({ params }) => {
                 <input
                   type="date"
                   value={checkInDate}
-                  onChange={(e) => {
-                    setCheckInDate(e.target.value);
-                    handleDateChange();
-                  }}
+                  onChange={(e) => setCheckInDate(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
               </div>
@@ -266,42 +188,9 @@ const HotelRoomDetail = ({ params }) => {
                 <input
                   type="date"
                   value={checkOutDate}
-                  onChange={(e) => {
-                    setCheckOutDate(e.target.value);
-                    handleDateChange();
-                  }}
+                  onChange={(e) => setCheckOutDate(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-1">
-                  {hotelData?.type === "dormitory" ? "Beds" : "Rooms"}
-                </label>
-                <div className="flex items-center space-x-4">
-                  <button
-                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-                    onClick={() => handleCountChange(false)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="text"
-                    value={
-                      hotelData?.type === "dormitory" ? bedCount : roomCount
-                    }
-                    readOnly
-                    className="w-16 text-center border border-gray-300 rounded-lg px-3 py-2 bg-white"
-                  />
-                  <button
-                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-                    onClick={() => handleCountChange(true)}
-                  >
-                    +
-                  </button>
-                </div>
-                {errorMessage && (
-                  <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-                )}
               </div>
             </div>
             <button

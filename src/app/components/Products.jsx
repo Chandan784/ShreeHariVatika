@@ -2,135 +2,164 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion"; // Import motion from framer-motion
+import { useState, useEffect } from "react";
+import { db } from "@/app/firebase"; // Ensure Firebase is properly initialized
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
-const hotels = [
-  {
-    id: 1,
-    title: "Deluxe Dormitory Tent",
-    description:
-      "Experience the best of luxury and comfort in our selected hotels.",
-    image: "/photos/deluxtent.jpg",
-    price: "2000",
-    beds: "Mattress",
-    persons: "16 persons",
-    facilities: [
-      "TV",
-      "Blanket",
-      "Pillow",
-      "Room hitter",
-      "Burn fire",
-      "Breakfast",
-      "Lunch",
-      "Evening Snak",
-      "Dinner",
-      "Bathroom",
-      "Hot water facility",
-      "Morning Satsang",
-      "Evening Bhajan and Kirtan",
-      "Mattress",
-      "Bedshit &towel",
-      "Wifi",
-      "CCTV Servinant",
-      "Medical facilities",
-      "food coat ",
-    ],
-  },
-  {
-    id: 2,
-    title: "Premium Dormitory Tent",
-    description:
-      "Experience the best of luxury and comfort in our selected hotels.",
-    image: "/photos/dormitory.jpg",
-    price: "3000",
-    beds: "Folding Beds",
-    persons: "8 persons",
-    facilities: [
-      "TV",
-      "Blanket",
-      "Pillow",
-      "Room hitter",
-      "Burn fire",
-      "Breakfast",
-      "Lunch",
-      "Evening Snak",
-      "Dinner",
-      "Bathroom",
-      "Hot water facility",
-      "Morning Satsang",
-      "Evening Bhajan and Kirtan",
-      "Mattress",
-      "Bedshit &towel",
-      "Wifi",
-      "CCTV Servinant",
-      "Medical facilities",
-      "food coat ",
-    ],
-  },
-  {
-    id: 3,
-    title: "Customizable Cottage Tent",
-    description: "Enjoy the finest amenities and exceptional service.",
-    image:
-      "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
-    price: "20000",
-    beds: "Custom",
-    persons: "",
-    facilities: [
-      "TV",
-      "Blanket",
-      "Pillow",
-      "Room hitter",
-      "Burn fire",
-      "Breakfast",
-      "Lunch",
-      "Evening Snak",
-      "Dinner",
-      "Bathroom",
-      "Hot water facility",
-      "Morning Satsang",
-      "Evening Bhajan and Kirtan",
-      "Mattress",
-      "Bedshit &towel",
-      "Wifi",
-      "CCTV Servinant",
-      "Medical facilities",
-      "food coat ",
-    ],
-  },
-  {
-    id: 4,
-    title: "Luxury Vip Cottage",
-    description: "Affordable comfort for your travel needs.",
-    image: "/photos/luxuryvip.jpg",
-    price: "21000",
-    beds: "2 double beds",
-    persons: "upto 4 persons",
-    facilities: [
-      "TV",
-      "Blanket",
-      "Pillow",
-      "Room hitter",
-      "Burn fire",
-      "Breakfast",
-      "Lunch",
-      "Evening Snak",
-      "Dinner",
-      "Bathroom",
-      "Hot water facility",
-      "Morning Satsang",
-      "Evening Bhajan and Kirtan",
-      "Mattress",
-      "Bedshit &towel",
-      "Wifi",
-      "CCTV Servinant",
-      "Medical facilities",
-      "food coat ",
-    ],
-  },
-];
+// const hotels = [
+//   {
+//     id: 1,
+//     title: "Deluxe Dormitory Tent",
+//     description:
+//       "Experience the best of luxury and comfort in our selected hotels.",
+//     image: "/photos/deluxtent.jpg",
+//     price: "2000",
+//     beds: "Mattress",
+//     persons: "16 persons",
+//     facilities: [
+//       "TV",
+//       "Blanket",
+//       "Pillow",
+//       "Room hitter",
+//       "Burn fire",
+//       "Breakfast",
+//       "Lunch",
+//       "Evening Snak",
+//       "Dinner",
+//       "Bathroom",
+//       "Hot water facility",
+//       "Morning Satsang",
+//       "Evening Bhajan and Kirtan",
+//       "Mattress",
+//       "Bedshit &towel",
+//       "Wifi",
+//       "CCTV Servinant",
+//       "Medical facilities",
+//       "food coat ",
+//     ],
+//   },
+//   {
+//     id: 2,
+//     title: "Premium Dormitory Tent",
+//     description:
+//       "Experience the best of luxury and comfort in our selected hotels.",
+//     image: "/photos/dormitory.jpg",
+//     price: "3000",
+//     beds: "Folding Beds",
+//     persons: "8 persons",
+//     facilities: [
+//       "TV",
+//       "Blanket",
+//       "Pillow",
+//       "Room hitter",
+//       "Burn fire",
+//       "Breakfast",
+//       "Lunch",
+//       "Evening Snak",
+//       "Dinner",
+//       "Bathroom",
+//       "Hot water facility",
+//       "Morning Satsang",
+//       "Evening Bhajan and Kirtan",
+//       "Mattress",
+//       "Bedshit &towel",
+//       "Wifi",
+//       "CCTV Servinant",
+//       "Medical facilities",
+//       "food coat ",
+//     ],
+//   },
+//   {
+//     id: 3,
+//     title: "Customizable Cottage Tent",
+//     description: "Enjoy the finest amenities and exceptional service.",
+//     image:
+//       "https://th.bing.com/th/id/OIP.HOe41EiZMsFtnApO90vonQHaE8?w=241&h=181&c=7&r=0&o=5&pid=1.7",
+//     price: "20000",
+//     beds: "Custom",
+//     persons: "",
+//     facilities: [
+//       "TV",
+//       "Blanket",
+//       "Pillow",
+//       "Room hitter",
+//       "Burn fire",
+//       "Breakfast",
+//       "Lunch",
+//       "Evening Snak",
+//       "Dinner",
+//       "Bathroom",
+//       "Hot water facility",
+//       "Morning Satsang",
+//       "Evening Bhajan and Kirtan",
+//       "Mattress",
+//       "Bedshit &towel",
+//       "Wifi",
+//       "CCTV Servinant",
+//       "Medical facilities",
+//       "food coat ",
+//     ],
+//   },
+//   {
+//     id: 4,
+//     title: "Luxury Vip Cottage",
+//     description: "Affordable comfort for your travel needs.",
+//     image: "/photos/luxuryvip.jpg",
+//     price: "21000",
+//     beds: "2 double beds",
+//     persons: "upto 4 persons",
+//     facilities: [
+//       "TV",
+//       "Blanket",
+//       "Pillow",
+//       "Room hitter",
+//       "Burn fire",
+//       "Breakfast",
+//       "Lunch",
+//       "Evening Snak",
+//       "Dinner",
+//       "Bathroom",
+//       "Hot water facility",
+//       "Morning Satsang",
+//       "Evening Bhajan and Kirtan",
+//       "Mattress",
+//       "Bedshit &towel",
+//       "Wifi",
+//       "CCTV Servinant",
+//       "Medical facilities",
+//       "food coat ",
+//     ],
+//   },
+// ];
 
 export default function Hotels() {
   const router = useRouter();
+  let [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "cottages"));
+        const hotelsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setHotels(hotelsData);
+        console.log(hotelsData);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
 
   // Animation variants for the cards
   const cardVariants = {
