@@ -3,8 +3,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { db } from "@/app/firebase"; // Ensure Firebase is properly initialized
-import { doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/firebase";
+// Adjust to your Firebase initialization file
 
 const HotelRoomDetail = ({ params }) => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const HotelRoomDetail = ({ params }) => {
   const [checkInDate, setCheckInDate] = useState(today);
   const [checkOutDate, setCheckOutDate] = useState(
     dayjs(today).add(1, "day").format("YYYY-MM-DD")
-  ); // Default +1 day
+  );
   const [roomCount, setRoomCount] = useState(1);
   const [bedCount, setBedCount] = useState(1);
   const [price, setPrice] = useState(0);
@@ -22,23 +23,25 @@ const HotelRoomDetail = ({ params }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHotel = async () => {
-      if (!id) return;
+    const fetchHotelData = async () => {
       try {
-        const hotelDoc = await getDoc(doc(db, "cottages", id));
-        if (hotelDoc.exists()) {
-          setHotelData({ id: hotelDoc.id, ...hotelDoc.data() });
+        const docRef = doc(db, "cottages", id); // Replace 'hotels' with your collection name in Firebase
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setHotelData(docSnap.data());
+          setLoading(false);
         } else {
-          console.error("No such hotel found!");
+          console.log("No such document!");
+          setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching hotel:", error);
-      } finally {
+        console.error("Error getting document:", error);
         setLoading(false);
       }
     };
 
-    fetchHotel();
+    fetchHotelData();
   }, [id]);
 
   const calculatePrice = () => {
@@ -55,6 +58,10 @@ const HotelRoomDetail = ({ params }) => {
 
     const gst = total * 0.18; // 18% GST
     return total + gst;
+  };
+
+  const handleDateChange = () => {
+    setPrice(calculatePrice());
   };
 
   useEffect(() => {
@@ -74,13 +81,14 @@ const HotelRoomDetail = ({ params }) => {
       userId: user.uid,
       checkInDate,
       checkOutDate,
-      roomCount,
-      bedCount,
+      roomCount, // This now represents the number of rooms
+      bedCount, // This now represents the number of beds
       price,
       transactionId,
       cottageType: hotelData.title,
     };
 
+    // Convert the booking data into a query string
     const bookingQueryString = new URLSearchParams(bookingData).toString();
 
     try {
@@ -106,11 +114,7 @@ const HotelRoomDetail = ({ params }) => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
-
-  if (!hotelData) {
-    return <div className="text-center py-10">Hotel not found</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -135,8 +139,9 @@ const HotelRoomDetail = ({ params }) => {
             Amenities
           </h2>
           <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-lg text-gray-600">
-            {hotelData?.facilities ? (
-              hotelData.facilities.split(",").map((facility, index) => (
+            {hotelData?.facilities
+              ?.split(",") // Split the string by commas to create an array
+              .map((facility, index) => (
                 <li key={index} className="flex items-center space-x-2">
                   <svg
                     className="w-5 h-5 text-blue-600"
@@ -152,12 +157,10 @@ const HotelRoomDetail = ({ params }) => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>{facility.trim()}</span>
+                  <span>{facility.trim()}</span>{" "}
+                  {/* trim to remove extra spaces */}
                 </li>
-              ))
-            ) : (
-              <li className="text-gray-500">No amenities available</li>
-            )}
+              ))}
           </ul>
         </div>
 
@@ -177,7 +180,10 @@ const HotelRoomDetail = ({ params }) => {
                 <input
                   type="date"
                   value={checkInDate}
-                  onChange={(e) => setCheckInDate(e.target.value)}
+                  onChange={(e) => {
+                    setCheckInDate(e.target.value);
+                    handleDateChange();
+                  }}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
               </div>
@@ -188,9 +194,53 @@ const HotelRoomDetail = ({ params }) => {
                 <input
                   type="date"
                   value={checkOutDate}
-                  onChange={(e) => setCheckOutDate(e.target.value)}
+                  onChange={(e) => {
+                    setCheckOutDate(e.target.value);
+                    handleDateChange();
+                  }}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-1">
+                  {hotelData?.type === "dormitory" ? "Beds" : "Rooms"}
+                </label>
+                <div className="flex items-center space-x-4">
+                  <button
+                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    onClick={() => {
+                      if (hotelData?.type === "dormitory") {
+                        setBedCount((prev) => Math.max(1, prev - 1));
+                      } else {
+                        setRoomCount((prev) => Math.max(1, prev - 1));
+                      }
+                      handleDateChange();
+                    }}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="text"
+                    value={
+                      hotelData?.type === "dormitory" ? bedCount : roomCount
+                    }
+                    readOnly
+                    className="w-16 text-center border border-gray-300 rounded-lg px-3 py-2 bg-white"
+                  />
+                  <button
+                    className="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    onClick={() => {
+                      if (hotelData?.type === "dormitory") {
+                        setBedCount((prev) => prev + 1);
+                      } else {
+                        setRoomCount((prev) => prev + 1);
+                      }
+                      handleDateChange();
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
             <button
