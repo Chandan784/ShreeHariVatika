@@ -88,9 +88,8 @@ const ContactPage = () => {
                   </svg>
                 </div>
                 <p className="text-gray-800 font-medium">
-                  Reception - 8917459855 ,8456988336 Manager - 9438368531,{" "}
-                  <br /> Ass. Manager- 7328079069 <br />
-                  Service - +91 7077314440, +91 70080 92138, +91 95833 2034
+                  Property Contact- +91 93377 38353 +91 98612 92818 <br />
+                  Emergency Contact- +91 98802 03121
                 </p>
               </div>
 
@@ -113,8 +112,8 @@ const ContactPage = () => {
                   </svg>
                 </div>
                 <p className="text-gray-800 font-medium">
-                  Sector -23, in front of pipa pool, side of BSNL tower, KUMBH
-                  MELA, Prayagraj ,Uttar Pradesh, India
+                  Shree Hari Vatika, Sector 22, Chatnag Ghat, In front of Pipa
+                  pull no -27, beside BSNL tower
                 </p>
               </div>
             </div>
